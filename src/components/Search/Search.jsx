@@ -52,7 +52,7 @@ const Search = ({
 				}}
 			/>
 			{searchTerm ? (
-				<span className={styles.icon}>
+				<span className={styles.icon} style={{ cursor: 'pointer' }}>
 					<MdClear onClick={handelClearInput} />
 				</span>
 			) : (
