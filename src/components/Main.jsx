@@ -9,7 +9,6 @@ const Main = () => {
 	const [data, setData] = useState([]);
 	const [tagsInFilteredGames, setTagsInFilteredGames] = useState([]);
 	const [filteredGames, setFilteredGames] = useState([]);
-	const [searchQuery, setSearchQuery] = useState('');
 	const [selectedCurrency, setSelectedCurrency] = useState('EUR');
 
 	const { currencies, games, studios, tags } = data;
@@ -54,21 +53,6 @@ const Main = () => {
 		filterGamesByCurrency(games);
 	};
 
-	const handleSearch = (text) => {
-		// Searh games by name
-		filterGamesByCurrency(games);
-		setSearchQuery(text);
-
-		const searchResult = filteredGames.filter((game) =>
-			game.name.toLowerCase().includes(text)
-		);
-		if (text.length > 2) {
-			filterGamesByCurrency(searchResult);
-		} else if (text === '') {
-			filterGamesByCurrency(games);
-		}
-	};
-
 	const handleTags = () => {
 		// Filter only tags used in games
 		const temp = games?.map((g) => g.gameTags).map((x) => x) || [];
@@ -111,7 +95,6 @@ const Main = () => {
 				Casino
 			</h1>
 			<div
-				className=""
 				style={{
 					display: 'flex',
 					alignItems: 'center',
@@ -120,8 +103,9 @@ const Main = () => {
 			>
 				<Search
 					placeholder="Search games..."
-					value={searchQuery}
-					onChange={(e) => handleSearch(e.target.value)}
+					data={games}
+					dataToSearchByName={filteredGames}
+					filterGamesByCurrency={filterGamesByCurrency}
 				/>
 				<Select
 					options={options}
