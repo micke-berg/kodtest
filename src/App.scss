@@ -15,18 +15,11 @@
 	--border-radius: 6px;
 }
 
-* {
-	background: linear-gradient(
-		to right,
-		rgba(255, 255, 255, 0.364),
-		rgba(var(--main-bg-color), 1)
-	);
-	color: var(--main-text-color);
-}
 h1,
 h2 {
 	margin: 0px;
 	padding: 0px;
+	color: var(--main-text-color);
 }
 
 h1 {
