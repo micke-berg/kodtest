@@ -4,7 +4,7 @@ import { MdClear, MdOutlineSearch } from 'react-icons/md';
 
 const Search = ({ filterGamesByCurrency, data, placeholder, style }) => {
 	const [searchTerm, setSearchTerm] = useState('');
-	const [searchResults, setSearchResults] = useState(false);
+	const [searchResults, setSearchResults] = useState(0);
 
 	const handleSearch = (searchText) => {
 		// Searh item by name
@@ -14,20 +14,14 @@ const Search = ({ filterGamesByCurrency, data, placeholder, style }) => {
 			item.name.toLowerCase().includes(searchText.toLowerCase())
 		);
 
-		console.log('searchResult', searchResult);
-
 		if (searchText.length > 0) {
 			filterGamesByCurrency(searchResult);
-			setSearchResults(true);
-		}
-		if (searchResult.length === 0) {
-			setSearchResults(false);
+			setSearchResults(searchResult.length);
 		}
 	};
 
 	const handelClearInput = () => {
 		setSearchTerm('');
-		setSearchResults(true);
 		filterGamesByCurrency(data);
 	};
 
@@ -35,7 +29,6 @@ const Search = ({ filterGamesByCurrency, data, placeholder, style }) => {
 		<div
 			style={{
 				position: 'relative',
-				// display: 'flex',
 				width: '100%',
 				maxWidth: '400px',
 			}}
@@ -68,11 +61,16 @@ const Search = ({ filterGamesByCurrency, data, placeholder, style }) => {
 					</span>
 				)}
 			</div>
-			{!searchResults ? (
-				<div style={{ position: 'absolute', top: 47, left: 0, color: 'pink' }}>
-					No games found
-				</div>
-			) : null}
+			<div style={{ position: 'absolute', top: 47, left: 0, color: 'pink' }}>
+				{!searchResults && searchTerm ? (
+					'No games found'
+				) : searchTerm !== '' ? (
+					<span>
+						<span style={{ fontWeight: '700' }}>{searchResults}</span>
+						{` Game${searchResults > 1 ? 's' : ''} found`}
+					</span>
+				) : null}
+			</div>
 		</div>
 	);
 };
