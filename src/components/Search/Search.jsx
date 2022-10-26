@@ -4,6 +4,7 @@ import { MdClear, MdOutlineSearch } from 'react-icons/md';
 
 const Search = ({ filterGamesByCurrency, data, placeholder, style }) => {
 	const [searchTerm, setSearchTerm] = useState('');
+	const [searchResults, setSearchResults] = useState(false);
 
 	const handleSearch = (searchText) => {
 		// Searh item by name
@@ -13,13 +14,20 @@ const Search = ({ filterGamesByCurrency, data, placeholder, style }) => {
 			item.name.toLowerCase().includes(searchText.toLowerCase())
 		);
 
+		console.log('searchResult', searchResult);
+
 		if (searchText.length > 0) {
 			filterGamesByCurrency(searchResult);
+			setSearchResults(true);
+		}
+		if (searchResult.length === 0) {
+			setSearchResults(false);
 		}
 	};
 
 	const handelClearInput = () => {
 		setSearchTerm('');
+		setSearchResults(true);
 		filterGamesByCurrency(data);
 	};
 
@@ -27,30 +35,44 @@ const Search = ({ filterGamesByCurrency, data, placeholder, style }) => {
 		<div
 			style={{
 				position: 'relative',
-				display: 'flex',
+				// display: 'flex',
 				width: '100%',
 				maxWidth: '400px',
 			}}
 		>
-			<input
-				type="text"
-				placeholder={placeholder}
-				onChange={(e) => handleSearch(e.target.value)}
-				value={searchTerm}
-				className={styles.search}
+			<div
 				style={{
-					...style,
+					position: 'relative',
+					display: 'flex',
+					width: '100%',
+					maxWidth: '400px',
 				}}
-			/>
-			{searchTerm ? (
-				<span className={styles.icon} style={{ cursor: 'pointer' }}>
-					<MdClear onClick={handelClearInput} />
-				</span>
-			) : (
-				<span className={styles.icon}>
-					<MdOutlineSearch />
-				</span>
-			)}
+			>
+				<input
+					type="text"
+					placeholder={placeholder}
+					onChange={(e) => handleSearch(e.target.value)}
+					value={searchTerm}
+					className={styles.search}
+					style={{
+						...style,
+					}}
+				/>
+				{searchTerm ? (
+					<span className={styles.icon} style={{ cursor: 'pointer' }}>
+						<MdClear onClick={handelClearInput} />
+					</span>
+				) : (
+					<span className={styles.icon}>
+						<MdOutlineSearch />
+					</span>
+				)}
+			</div>
+			{!searchResults ? (
+				<div style={{ position: 'absolute', top: 47, left: 0, color: 'pink' }}>
+					No games found
+				</div>
+			) : null}
 		</div>
 	);
 };
