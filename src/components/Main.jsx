@@ -49,7 +49,7 @@ const Main = () => {
 		filterGamesByCurrency(games);
 	}, [selectedCurrency, games]);
 
-	const defaultGames = () => {
+	const handleResetToAllGames = () => {
 		filterGamesByCurrency(games);
 	};
 
@@ -104,7 +104,6 @@ const Main = () => {
 				<Search
 					placeholder="Search games..."
 					data={games}
-					dataToSearchByName={filteredGames}
 					filterGamesByCurrency={filterGamesByCurrency}
 				/>
 				<Select
@@ -126,7 +125,7 @@ const Main = () => {
 						style={{
 							backgroundColor: 'orange',
 						}}
-						onClick={() => defaultGames()}
+						onClick={() => handleResetToAllGames()}
 					/>
 				</div>
 			</div>
