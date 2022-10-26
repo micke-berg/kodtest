@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Button from './Button/Button';
 import Card from './Card/Card';
+import List from './List/List';
 import Search from './Search/Search';
 import Select from './Select/Select';
 import StudioFilter from './StudioFilter/StudiofFilter';
@@ -40,7 +41,7 @@ const Main = () => {
 			const currenciesForStudio = currencies.filter(
 				(cur) => cur.studioId === game.studioId
 			);
-			return currenciesForStudio[0].currencies.includes(selectedCurrency);
+			return currenciesForStudio[0]?.currencies?.includes(selectedCurrency);
 		});
 		setFilteredGames(currencyFilteredGames);
 	};
@@ -140,21 +141,7 @@ const Main = () => {
 					/>
 				) : null}
 			</div>
-			<div>
-				<h2 className="header">Games</h2>
-				<div className="grid">
-					{filteredGames?.map((game) => (
-						<Card
-							key={game.id}
-							title={game.name}
-							subTitle={
-								studios.filter((studio) => studio.id === game.studioId)[0].name
-							}
-							imageUrl={game.imageUrl}
-						/>
-					))}
-				</div>
-			</div>
+			<List games={filteredGames} studios={studios} header="Games" />
 		</div>
 	);
 };
